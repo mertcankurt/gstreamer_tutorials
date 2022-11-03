@@ -76,11 +76,10 @@ class VideoPlayer:
                         # print current position and total duration
                         print(f"Position {format_ns(current)} / {format_ns(self.duration)}")
 
-                        # if seeking is enabled, we have not done it yet and the time is right,
-                        # seek
+                        # if seeking is enabled, we have not done it yet and the time is right, seek
                         if self.seek_enabled and not self.seek_done and current > 10 * Gst.SECOND:
                             print("Reached 10s, performing seek...")
-                            self.playbin.seek_simple(Gst.Format.TIME, Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT, 30 * Gst.SECOND)
+                            self.playbin.seek_simple(Gst.Format.TIME, Gst.SeekFlags.FLUSH, 30 * Gst.SECOND)
                             self.seek_done = True
         finally:
             self.playbin.set_state(Gst.State.NULL)
